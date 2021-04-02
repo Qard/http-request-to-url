@@ -26,6 +26,5 @@ module.exports = async function httpRequestToUrl (request, opts = {}) {
 }
 
 function isProxiedRequest (request) {
-  console.log(request.path)
   return request.path.indexOf('https:') === 0 || request.path.indexOf('http:') === 0
 }
