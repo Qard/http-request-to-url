@@ -3,7 +3,8 @@ const socketLocation = require('socket-location')
 
 module.exports = async function httpRequestToUrl (request, opts = {}) {
   // default to true
-  opts.followProxies = opts.hasOwnProperty('followProxies') ? opts.followProxies : true
+  opts.followProxies = Object.prototype.hasOwnProperty.call(opts, 'followProxies')
+    ? opts.followProxies : true
 
   if (!request.socket) {
     await awaitEvent(request, 'socket')
@@ -15,6 +16,10 @@ module.exports = async function httpRequestToUrl (request, opts = {}) {
 
   if (isProxiedRequest(request) && opts.followProxies) {
     return request.path
+  }
+
+  if (isProxiedRequest(request) && !opts.followProxies) {
+    return `${proto}//${location}`
   }
 
   return `${proto}//${location}${request.path}`
