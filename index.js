@@ -3,10 +3,7 @@ const socketLocation = require('socket-location')
 
 module.exports = async function httpRequestToUrl (request, opts = {}) {
   // default to true
-  console.log(opts.followProxies)
-  console.log(!!opts.followProxies)
   opts.followProxies = opts.followProxies !== false
-  console.log(opts.followProxies)
 
   if (!request.socket) {
     await awaitEvent(request, 'socket')
